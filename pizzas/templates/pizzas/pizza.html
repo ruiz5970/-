@@ -1,0 +1,52 @@
+{% extends "pizzas/base.html" %}
+
+{% block page_header %}
+ <h3>{{ pizza }}</h3>
+{% endblock page_header %}
+
+{% block content %}
+<p>
+    <a href="{% url 'pizzas:new_topping' pizza.id %}">Add a new topping</a>
+</p>
+
+
+
+{% for t in toppings %}
+    <div class="card mb-3">
+        <h4 class="card-header">
+            {{ t.date_added|date:'M d, Y H:i' }}
+            <small><a href="{% url 'pizzas:edit_topping' t.id %}">
+                Edit Topping</a></small>
+            </h4>
+            <div class="card-body">
+                {{ t.name|linebreaks }}
+                </div>
+            </div> 
+        {% empty %}
+        <p> There are no toppings for this pizza yet.</p>
+        {% endfor %}
+
+       <p>
+           <a href="{% url 'pizzas:new_comment' pizza.id %}">Add a new comment</a>
+       </p>
+       
+       
+       
+       {% for c in comments %}
+           <div class="card mb-3">
+               <h4 class="card-header">
+                {{ c.date_added|date:'M d, Y H:i' }}
+                   <small><a href="{% url 'pizzas:edit_comment' c.id %}">Edit Comment</a>
+                   </small>
+               </h4>
+               <div class="card-body">
+                   {{ c.name|linebreaks }}
+                   </div>
+                   </div>
+            
+               {% empty %}
+               <p> There are no comments for this pizza yet.</p>
+               {% endfor %}
+
+               
+{% endblock content %}
